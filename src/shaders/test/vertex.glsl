@@ -9,6 +9,7 @@ attribute vec2 uv;
 attribute float aRandom;
 
 varying vec2 vUv;
+varying float vElevation;
 
 // varying float vRandom;
 
@@ -59,8 +60,14 @@ void main()
     //gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);
 
     vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-    modelPosition.z += sin(modelPosition.x * uFrequency.x - uTime) * 0.1; // wobbly plane
-    modelPosition.z += sin(modelPosition.y * uFrequency.y - uTime) * 0.1; // wobbly plane
+
+    float elevation = sin(modelPosition.x * uFrequency.x - uTime) * 0.1;
+    elevation += sin(modelPosition.y * uFrequency.y - uTime) * 0.1;
+
+    modelPosition.z += elevation;
+
+    // modelPosition.z += sin(modelPosition.x * uFrequency.x - uTime) * 0.1; // wobbly plane
+    // modelPosition.z += sin(modelPosition.y * uFrequency.y - uTime) * 0.1; // wobbly plane
     // modelPosition.z += aRandom * 0.1; spikey plane
 
     // modelPosition.y += uTime;
@@ -71,6 +78,7 @@ void main()
     gl_Position = projectedPosition;
 
     vUv = uv; // this value will be interpolated
+    vElevation = elevation;
 
     // vRandom = aRandom;
 }
