@@ -1,6 +1,8 @@
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
+uniform vec2 uFrequency; // uFrequency defined in the Script
+uniform float uTime;
 
 attribute vec3 position;
 attribute float aRandom;
@@ -54,8 +56,11 @@ void main()
     //gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);
 
     vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-    // modelPosition.z += sin(modelPosition.x * 10.0) * 0.1; wobbly plane
+    modelPosition.z += sin(modelPosition.x * uFrequency.x - uTime) * 0.1; // wobbly plane
+    modelPosition.z += sin(modelPosition.y * uFrequency.y - uTime) * 0.1; // wobbly plane
     // modelPosition.z += aRandom * 0.1; spikey plane
+
+    // modelPosition.y += uTime;
 
     vec4 viewPosition = viewMatrix * modelPosition;
     vec4 projectedPosition = projectionMatrix * viewPosition;
