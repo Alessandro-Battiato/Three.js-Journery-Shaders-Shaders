@@ -5,7 +5,10 @@ uniform vec2 uFrequency; // uFrequency defined in the Script
 uniform float uTime;
 
 attribute vec3 position;
+attribute vec2 uv;
 attribute float aRandom;
+
+varying vec2 vUv;
 
 // varying float vRandom;
 
@@ -66,6 +69,8 @@ void main()
     vec4 projectedPosition = projectionMatrix * viewPosition;
 
     gl_Position = projectedPosition;
+
+    vUv = uv; // this value will be interpolated
 
     // vRandom = aRandom;
 }
