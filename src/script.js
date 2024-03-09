@@ -27,6 +27,15 @@ const textureLoader = new THREE.TextureLoader()
 // Geometry
 const geometry = new THREE.PlaneGeometry(1, 1, 32, 32)
 
+const count = geometry.attributes.position.count; // exact count of vertices
+const randoms = new Float32Array(count);
+
+for (let i = 0; i < count; i++) {
+    randoms[i] = Math.random();
+}
+
+geometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 1)); // aRandom where a stands for attributes, uniforms would be uRandom and varying would be vRandom
+
 // Material
 const material = new THREE.RawShaderMaterial({
     vertexShader: testVertexShader,
